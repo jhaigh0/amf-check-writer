@@ -381,6 +381,39 @@ class TestYamlGeneration(BaseTest):
             ]
         }
 
+    def test_filename_structure_check(self, spreadsheets_dir, tmpdir):
+        """
+        Check that a YAML file is generated from the 'file name structure'
+        spreadsheet
+        """
+        s_dir = spreadsheets_dir
+        fns = (s_dir.join("Instrument Names & Data Products.xlsx").join("File Name Structure.xlsx"))
+        fns.write("\n".join((
+            "<instrument_name>_<platform_name>_<YYYYMM><DD><HH><mm><SS>_<data_product>_<option1>_<option2>_v<version>.nc",
+            "",
+            "Instrument\tdata product\toption 1\toption 2",
+            "ncas-caps-1\taerosol-size-distribution\tcas",
+            "\taerosol-size-distribution\tcis",
+            "",
+            "ncas-lidar-dop-1\taerosol- backscatter-radial-winds\tfixed co or cr",
+            "\taerosol- backscatter-radial-winds\tppi",
+            "\taerosol- backscatter-radial-winds\trhi"
+        )))
+
+        output = tmpdir.join("yaml")
+        sh = SpreadsheetHandler(str(s_dir))
+        sh.write_yaml(str(output))
+
+        file_info_yaml = output.join("AMF_file_info.yml")
+        assert file_info_yaml.check()
+        assert yaml.load(file_info_yaml.read()) == {
+            "suite_name": "file_info_checks",
+            "checks": [
+                ""
+            ]
+        }
+
+
 class TestCommonVariablesAndDimensions(BaseTest):
     def test_common(self, spreadsheets_dir, tmpdir):
         s_dir = spreadsheets_dir
