@@ -120,8 +120,10 @@ Google API dashboard.
 * Return to the dashboard and click 'Credentials' in the sidebar on the left
   (key icon)
 
-* Click 'Create credentials' and select 'OAuth client ID'. Select 'Other' for
+* Click 'Create credentials' and select 'OAuth client ID'. Select 'Desktop app' for
   application type and follow the prompts. Dismiss the popup that appears.
+  You made need to first 'configure consent screen', if so go through the steps,
+  you only need to fill in the required fields, and add your email as a user.
 
 * You should see the newly created credentials in the table. On the right hand
   side of the table there is a download icon ('Download JSON'). Click it and
