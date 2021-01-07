@@ -17,32 +17,41 @@ The code for the checks themselves is implemented in
 [compliance-check-lib](https://github.com/cedadev/compliance-check-lib).
 
 ## Installation
-
-Depencendies for Compliance Checker and compliance-check-lib include some
-packages that must be compiled from source, which can be tricky to set up. The
-recommended way to get set up is to use a CentOS 6 machine and do the
+The recommended way to get set up is to use a CentOS 7 machine and do the
 following:
 
-* Install the [JASMIN Analysis
-  Platform](https://github.com/cedadev/jasmin_scivm/wiki/Installation#64-bit-centos-6x)
-
-* Install the following packages: `yum install python27-netCDF4 python27-iris
-  python27-cf python27-virtualenv python27-cf_units`
-
-(alternatively use a JASMIN VM which will already have the JAP and those
-packages installed)
-
-Then create a Python 2.7 virtual environment and install the required python
-packages:
 
 ```bash
-virtalenv -p python2.7 --system-site-packages venv
-source venv/bin/activate
+wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh
+sh Miniconda3-latest-Linux-x86_64.sh
+rm -f Miniconda3-latest-Linux-x86_64.sh
 
-pip install git+https://github.com/ncasuk/amf-check-writer \
-            git+https://github.com/cedadev/compliance-checker \
-            git+https://github.com/cedadev/compliance-check-lib \
-            git+https://github.com/cedadev/cc-yaml
+conda create --name amf-checker-env -y
+conda activate amf-checker-env
+conda install -c conda-forge compliance-checker pip -y
+
+mkdir project-dir
+cd project-dir/
+
+git clone https://github.com/gapintheclouds/amf-check-writer.git
+cd amf-check-writer/
+pip install --editable . --no-deps
+pip install -r requirements.txt
+cd ..
+
+git clone https://github.com/cedadev/compliance-check-lib.git
+cd compliance-check-lib/
+pip install --editable . --no-deps
+pip install -r requirements.txt
+git submodule update --init --recursive
+export PYESSV_ARCHIVE_HOME=/home/hugo/python/compliance-check-lib/cc-vocab-cache/pyessv-archive-eg-cvs
+cd ..
+
+git clone https://github.com/cedadev/cc-yaml
+cd cc-yaml/
+pip install --editable . --no-deps
+pip install -r requirements.txt
+cd ../..
 ```
 
 ## Quickstart
