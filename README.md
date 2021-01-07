@@ -145,6 +145,8 @@ Google API dashboard.
 * You will be given a URL to visit in a web browser and prompted for a
   verification code. This lets you sign into a Google account and give
   permission for the app to access your data on Google drive/sheets.
+  You might be me with a google warning saying your app is unverified, if so,
+  you can click the small 'advanced' button and continue through.
 
 Alternatively follow the quickstart guide on the Google sheets site to enable
 the sheets API and create credentials (this also allows you to create a new
